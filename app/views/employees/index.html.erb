@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Employees</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Direccion</th>
+      <th>Telefono</th>
+      <th>Fecha nacimiento</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @employees.each do |employee| %>
+      <tr>
+        <td><%= employee.nombre %></td>
+        <td><%= employee.direccion %></td>
+        <td><%= employee.telefono %></td>
+        <td><%= employee.fecha_nacimiento %></td>
+        <td><%= link_to 'Show', employee %></td>
+        <td><% if can? :update, employee %><%= link_to 'Edit', edit_employee_path(employee) %><% end %></td>
+        <td><% if can? :destroy, employee %><%= link_to 'Destroy', employee, method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<% if can? :create, current_user %><%= link_to 'New Employee', new_employee_path %><% end %>

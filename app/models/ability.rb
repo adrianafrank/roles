@@ -6,12 +6,20 @@ class Ability
       if user.admin?
         can :manage, :all
       elsif user.vip?
-        can :read, [Post,Product]
-        can :destroy, :all
-      else
-        can :create, Post, user_id: user.id
+        can :read, [Post,Product,Employee,User]
+        can :destroy, [Post,Product,Employee]
+      elsif user.user?
+        can :create, Post
+        #can :create, Employee
         can :update, Post, user_id: user.id
-        can :read, :all
+        can :update, Employee
+        can :read, Post, user_id: user.id
+        can :read, Employee
+      elsif user.seller?
+        cannot :create , Product
+        can :read, Product
+      else
+        can :read, [Post,Product,Employee]
       end
     # Define abilities for the passed in user here. For example:
     #
